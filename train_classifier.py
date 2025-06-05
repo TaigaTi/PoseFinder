@@ -4,7 +4,9 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from sklearn.ensemble import RandomForestClassifier
 from export_data import classification_report_export
-import matplotlib.pyplot as plt
+from joblib import dump
+import os
+
 
 # Load dataset
 df = pd.read_csv("pose_dataset.csv")
@@ -32,3 +34,6 @@ print("\nClassification Report:\n", classification_report(y_test, y_pred_labels)
 report_path = 'results/results.xlsx'
 classification_report_export(classification_report(y_test, y_pred_labels, output_dict=True), report_path)
 
+# Save the Model
+os.makedirs('model', exist_ok=True)
+dump(model, 'model/rf_pose_classifier.joblib')
